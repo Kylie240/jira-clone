@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+*{
+    box-sizing: border-box;
+    margin: 0px;
+}
+app-main-page{
+    width: 100%;
+}
+.p-button{
+    height: 32px;
+}
