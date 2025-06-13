@@ -17,4 +17,25 @@ import { TooltipModule } from 'primeng/tooltip';
 })
 export class MainPageComponent {
   value: string = '';
+  boradColumns: any[] = [
+    {
+      title: 'TO DO',
+      items: [
+        {
+          image: 'https://www.shutterstock.com/image-vector/elearning-banner-online-education-home-260nw-1694176021.jpg',
+          decription: 'This is a test of how the decription will appear in this small little qhite box of words.',
+          title: 'Testing',
+          assignee: '',
+        }
+      ]
+    },
+    {
+      title: 'IN PROGRESS',
+      items: []
+    },
+    {
+      title: 'DONE',
+      items: []
+    },
+  ];
 }

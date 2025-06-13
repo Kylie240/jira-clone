@@ -1,5 +1,9 @@
-<app-navigation-bar/>
-<div class="flex h-full w-full">
-    <app-side-navigation/>
-    <app-main-page/>
+<div class="h-full">
+    <app-navigation-bar/>
+    <div class="flex h-full w-full">
+        @if (displaySideNav()) {
+            <app-side-navigation/>
+        }
+        <app-main-page/>
+    </div>
 </div>

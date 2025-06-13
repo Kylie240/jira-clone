@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { NavigationService } from '../navigation.service';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -15,4 +16,10 @@ import { ButtonModule } from 'primeng/button';
 })
 export class NavigationBarComponent {
   value: string = '';
+
+  constructor ( private navigationService: NavigationService ) {}
+
+  toggleSideNav() {
+    this.navigationService.toggleSideNavbar();
+  }
 }

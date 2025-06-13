@@ -97,7 +97,7 @@
             </div>
         </div>
     </div>
-    <div class="flex flex-column w-full p-3">
+    <div class="flex flex-column w-full h-full p-3">
         <div class="flex justify-content-between">
             <div class="flex align-items-center gap-2">
                 <div class="flex align-items-center" style="width: 184px;">
@@ -130,54 +130,43 @@
         </div>
         <div class="flex h-full pt-3">
             <div class="flex gap-2 h-full">
-                <div class="flex flex-column bg-gray-100 border-round-sm" style="width: 250px; min-height: 100%;">
-                    <div class="flex p-3 gap-1" style="cursor: grab;">
-                        <p class="m-0 text-xs">TO DO</p>
-                        <div class="bg-gray-300  px-2 border-round-sm">
-                            <p class="m-0 text-sm">3</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-column cursor-pointer p-1">
-                        <div>
-                            <img style="height: 120px; width: 100%; object-fit: cover;" src="https://www.shutterstock.com/image-vector/elearning-banner-online-education-home-260nw-1694176021.jpg" alt="">
-                        </div>
-                        <div class="flex flex-column bg-white p-2 gap-2">
-                            <p class="m-0 text-xs line-height-3">
-                                This is a test of how the decription will appear in this small little qhite box of words.
-                            </p>
-                            <div class="flex justify-content-between">
-                                <div class="flex align-items-center gap-1">
-                                    <div class="border-round-sm bg-blue-500 flex justify-content-center align-items-center" style="width: 20px; height: 20px">
-                                        <i class="fa-solid fa-check text-xs"></i>
-                                    </div>
-                                    <p class="m-0 text-sm">
-                                        Testing
-                                    </p>
-                                </div>
-                                <div pTooltip="Unassigned" tooltipPosition="bottom" class="cursor-pointer border-circle bg-gray-300 flex justify-content-center align-items-center" style="width: 20px; height: 20px">
-                                    <i class="fa-regular fa-user text-xs"></i>
-                                </div>
+                @for(column of boradColumns; track column.title) {
+                    <div class="flex flex-column bg-gray-100 border-round-sm" style="width: 250px; min-height: 100%;">
+                        <div class="flex p-3 gap-1" style="cursor: grab;">
+                            <p class="m-0 text-xs">{{column.title}}</p>
+                            <div class="bg-gray-300  px-2 border-round-sm">
+                                <p class="m-0 text-sm">3</p>
                             </div>
                         </div>
+                        @for(item of column; track $index) {
+                            <div class="flex flex-column cursor-pointer p-1">
+                                @if(item.image) {
+                                    <div>
+                                        <img style="height: 120px; width: 100%; object-fit: cover;" src="{{item.image}}" alt="">
+                                    </div>
+                                }
+                                <div class="flex flex-column bg-white p-2 gap-2">
+                                    <p class="m-0 text-xs line-height-3">
+                                        {{item.description}}
+                                    </p>
+                                    <div class="flex justify-content-between">
+                                        <div class="flex align-items-center gap-1">
+                                            <div class="border-round-sm bg-blue-500 flex justify-content-center align-items-center" style="width: 20px; height: 20px">
+                                                <i class="fa-solid fa-check text-xs"></i>
+                                            </div>
+                                            <p class="m-0 text-sm">
+                                                {{item.title}}
+                                            </p>
+                                        </div>
+                                        <div pTooltip="Unassigned" tooltipPosition="bottom" class="cursor-pointer border-circle bg-gray-300 flex justify-content-center align-items-center" style="width: 20px; height: 20px">
+                                            <i class="fa-regular fa-user text-xs"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
                     </div>
-                </div>
-                <div class="flex flex-column bg-gray-100 border-round-sm" style="width: 250px; height: 800px">
-                    <div class="flex p-3 gap-1" style="cursor: grab;">
-                        <p class="m-0 text-sm">IN PROGRESS</p>
-                        <div class="bg-gray-300  px-2 border-round-sm">
-                            <p class="m-0 text-sm">3</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex flex-column bg-gray-100 border-round-sm" style="width: 250px; height: 800px">
-                    <div class="flex p-3 gap-1" style="cursor: grab;">
-                        <p class="m-0 text-sm">DONE</p>
-                        <div class="bg-gray-300  px-2 border-round-sm">
-                            <p class="m-0 text-sm">3</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                }
             <div pTooltip="Create column" tooltipPosition="left" class="flex ml-2 cursor-pointer hover:bg-gray-200 h-2rem w-2rem justify-content-center align-items-center p-1 border-1 border-gray-400 border-round-sm">
                 <i class="fa-solid fa-plus fa-sm"></i>
             </div>
