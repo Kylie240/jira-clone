@@ -1,5 +1,7 @@
 <div class="h-full">
-    <app-navigation-bar/>
+    @if (!fullScreenEnabled()) {
+        <app-navigation-bar/>
+    }
     <div class="flex h-full w-full">
         @if (displaySideNav()) {
             <app-side-navigation/>

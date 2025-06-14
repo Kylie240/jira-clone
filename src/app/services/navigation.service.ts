@@ -6,6 +6,8 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class NavigationService {
 
+  private fullScreenEnabledSource = new BehaviorSubject<boolean>(false);
+  fullScreenEnabled$ = this.fullScreenEnabledSource.asObservable();
   private sideNavSource = new BehaviorSubject<boolean>(true);
   sideNavVisible$ = this.sideNavSource.asObservable();
 
@@ -13,7 +15,7 @@ export class NavigationService {
     this.sideNavSource.next(display);
   }
   
-  toggleFullScreen(display: boolean = true) {
-    this.sideNavSource.next(display);
+  toggleFullScreen(display: boolean) {
+    this.fullScreenEnabledSource.next(!display);
   }
 }
