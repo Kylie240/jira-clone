@@ -1,7 +1,4 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { UserDto } from '../dtos/userDto';
-import { users } from '../data/userData';
 import { projects } from '../data/projectData';
 import { ColumnDto } from '../dtos/columnDto';
 import { ColumnItemDto } from '../dtos/columnItemDto';
@@ -10,66 +7,69 @@ import { ColumnItemDto } from '../dtos/columnItemDto';
   providedIn: 'root'
 })
 export class ProjectService {
-    readonly projects = projects;
+    // readonly projects = projects;
 
   getProject(projectId: string) {
     const index = this.getProjectReference(projectId);
     if (index !== -1) {
-        return this.projects[index];
+        return projects[index];
     }
     return null;
   }
 
-  addNewColumn(projectId: string) {
+  addNewColumn(projectId: string, title: string) {
     const index = this.getProjectReference(projectId);
     if (index !== -1) {
-        this.projects[index].columns.push(new ColumnDto());
+        projects[index].columns.push(new ColumnDto(title));
     }
   }
 
   addColumnItem(projectId: string, columnIdx: number) {
     const index = this.getProjectReference(projectId);
     if (index !== -1) {
-        this.projects[index].columns[columnIdx].items.push(new ColumnItemDto());
+        projects[index].columns[columnIdx].items.push(new ColumnItemDto());
     }
   }
 
   renameColumn(projectId: string, columnIdx: number, value: string) {
     const index = this.getProjectReference(projectId);
     if (index !== -1) {
-        this.projects[index].columns[columnIdx].title = value;
+        projects[index].columns[columnIdx].title = value;
     }
   }
 
   moveColumn(projectId: string, columnIdx: number, moveLeft: boolean) {
     const index = this.getProjectReference(projectId);
-    if (!index) { return; };
+    if (index === -1) { return; };
 
-    const column = this.projects[index].columns;
-    if ((moveLeft && index === 0) || (!moveLeft && index === column.length - 1) || column.length === 1) {
+    const columns = structuredClone(projects[index].columns);
+    if ((moveLeft && columnIdx === 0) || (!moveLeft && columnIdx === columns.length - 1) || columns.length === 1) {
       return;
     }
-    const columnToMove = column[columnIdx];
+
+    console.log(columns);
+    const columnToMove = structuredClone(columns[columnIdx]);
+    this.deleteColumn(projectId, columnIdx);
     const direction = moveLeft ? -1 : 1;
-    column.slice(columnIdx, 1);
-    column.splice(columnIdx + direction, 0, columnToMove);
+    projects[index].columns.splice(columnIdx + direction, 0, columnToMove)
   }
 
   setColumnLimit(projectId: string, columnIdx: number, limit: number) {
     const index = this.getProjectReference(projectId);
     if (index !== -1) {
-        this.projects[index].columns[columnIdx].itemLimit = limit;
+        projects[index].columns[columnIdx].itemLimit = limit;
     }
   }
 
   deleteColumn(projectId: string, columnIdx: number) {
     const index = this.getProjectReference(projectId);
     if (index !== -1) {
-        this.projects[index].columns.slice(columnIdx, 1);
+        const filteredArray = projects[index].columns.filter((_, index) => index != columnIdx);
+        projects[index].columns = structuredClone(filteredArray);
     }
   }
 
   private getProjectReference(projectId: string): number {
-    return this.projects.findIndex(p => p.projectId === projectId);
+    return projects.findIndex(p => p.projectId === projectId);
   }
 }

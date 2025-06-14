@@ -137,12 +137,12 @@
         </div>
         <div class="flex h-full pt-3">
             <div class="flex gap-2 h-full">
-                @for (column of project().columns; track column.title; let idx = $index) {
-                    <app-column [column]="column" [idx]="idx" [projectId]="project().projectId" />
-                }
+            @for (column of project().columns; track column.title; let idx = $index) {
+                <app-column [column]="column" [idx]="idx" [projectId]="project().projectId" />
+            }
             <div>
                 @if(!creatingColumn()) {
-                    <div class="flex ml-2 cursor-pointer hover:bg-gray-200 h-2rem w-2rem justify-content-center align-items-center p-1 border-1 border-gray-400 border-round-sm" pTooltip="Create column" (click)="toggleColumnCreation()" tooltipPosition="left">
+                    <div class="flex cursor-pointer hover:bg-gray-200 h-2rem w-2rem justify-content-center align-items-center p-1 border-1 border-gray-400 border-round-sm" pTooltip="Create column" (click)="toggleColumnCreation()" tooltipPosition="left">
                         <i class="fa-solid fa-plus fa-sm"></i>
                     </div>
                 } @else {
@@ -151,7 +151,7 @@
                             <input type="text" pInputText [(ngModel)]="newColumnTitle" (keydown.enter)="addNewColumn()" class="w-full" style="width: 184px;" placeholder="Search board"/>
                         </div>
                         <div class="flex gap-1 justify-content-end">
-                            <div style="height: 32px; width: 32px;" (click)="addNewColumn()" class="flex shadow-1 align-items-center justify-content-center cursor-pointer hover:bg-gray-200 align-items-center p-1 border-1 border-gray-400 border-round-sm">
+                            <div style="height: 32px; width: 32px;" (click)="addNewColumn(); toggleColumnCreation(false)" class="flex shadow-1 align-items-center justify-content-center cursor-pointer hover:bg-gray-200 align-items-center p-1 border-1 border-gray-400 border-round-sm">
                                 <i class="fa-solid fa-check fa-sm"></i>
                             </div>
                             <div style="height: 32px; width: 32px;" (click)="toggleColumnCreation(false)" class="flex shadow-1 align-items-center justify-content-center cursor-pointer hover:bg-gray-200 align-items-center p-1 border-1 border-gray-400 border-round-sm">

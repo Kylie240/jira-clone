@@ -35,8 +35,8 @@ export class MainPageComponent implements OnInit {
   readonly itemType = ItemTypeEnum;
   readonly itemStatus = ItemStatusEnum;
   readonly itemPriority = ItemPriorityEnum;
-  value: string = '';
-  newColumnTitle: string = '';
+  value: string;
+  newColumnTitle: string;
   fullscreenEnabled: WritableSignal<boolean> = signal(false);
   creatingColumn: WritableSignal<boolean> = signal(false);
   user: WritableSignal<UserDto> = signal(null);
@@ -69,8 +69,6 @@ export class MainPageComponent implements OnInit {
 
   getProject() {
     this.project.set(this.projectService.getProject('7c6102b0-ad6e-46de-92a2-a7b39ce9607e'));
-    console.log(this.projectService.getProject('7c6102b0-ad6e-46de-92a2-a7b39ce9607e'));
-    
   }
 
   toggleFullScreen() {
@@ -82,6 +80,6 @@ export class MainPageComponent implements OnInit {
   }
 
   addNewColumn() {
-    this.projectService.addNewColumn(this.project().projectId);
+    this.projectService.addNewColumn(this.project().projectId, this.newColumnTitle);
   }
 }
