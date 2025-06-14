@@ -8,5 +8,6 @@ export class ColumnDto {
         this.items = items; 
     }
     editmode?: boolean = false;
+    isHovering?: boolean = false;
     itemLimit?: number;
 }

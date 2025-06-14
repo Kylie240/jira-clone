@@ -24,7 +24,7 @@ import { UserService } from '../services/user.service';
 export class NavigationBarComponent {
   value: string = '';
   sideNavVisible: boolean;
-  user: WritableSignal<UserDto> = signal(new UserDto())
+  user: WritableSignal<UserDto> = signal(null)
 
   constructor ( 
     private navigationService: NavigationService,

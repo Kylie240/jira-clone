@@ -6,7 +6,9 @@ import { UserDto } from '../dtos/userDto';
     standalone: true,
 })
     export class InitialsPipe implements PipeTransform {
-        transform(user: UserDto): any {
-        return user.firstName[0].concat(user.lastName[0]);
+        transform(user: UserDto): string {
+        const firstInitial = user.firstName[0];
+        const lastInitial = user.lastName[0];
+        return firstInitial + lastInitial;
     }
 }

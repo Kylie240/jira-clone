@@ -7,7 +7,7 @@
                 }
                 <div class="flex align-items-center gap-2">
                     <div class="bg-red-400 border-round-sm" style="width: 20px; height: 20px;"></div>
-                    <h2 class="m-0 text-gray-800">(Welcome) To My Jira Clone</h2>
+                    <h2 class="m-0 text-gray-800">{{project().name}}</h2>
                     <div class="hover:bg-gray-200 cursor-pointer px-2 py-1 border-round-sm">
                         <i class="fa-solid fa-ellipsis"></i>
                     </div>
@@ -113,9 +113,11 @@
                 <div class="flex align-items-center" style="width: 184px;">
                     <input type="text" pInputText [(ngModel)]="value" class="w-full" style="width: 184px;" placeholder="Search board"/>
                 </div>
-                @for(user of userList(); track $index) {
-                    <app-avatar [user]="user"/>
-                }
+                <div class="flex">
+                    @for(user of userList(); track $index) {
+                        <app-avatar [user]="user" [displayName]="true" />
+                    }
+                </div>
             </div>
             <div class="flex gap-2">
                 <div style="height: 32px" class="flex px-2 align-items-center justify-content-center cursor-pointer hover:bg-gray-200 align-items-center gap-1 p-1 border-1 border-gray-400 border-round-sm">
@@ -135,66 +137,8 @@
         </div>
         <div class="flex h-full pt-3">
             <div class="flex gap-2 h-full">
-                @for (column of boradColumns; track column.title; let idx = $index) {
-                    <div class="flex flex-column bg-gray-100 border-round-sm" style="width: 250px; min-height: 100%;">
-                        <div class="flex px-3 relative  py-2 align-items-center justify-content-between">
-                            <div class="flex align-items-center gap-1" style="cursor: grab;">
-                                <p class="m-0 text-xs">{{column.title}}</p>
-                                <div class="bg-gray-300 px-2 border-round-sm">
-                                    <p class="m-0 text-sm">{{idx + 1}}</p>
-                                </div>
-                            </div>
-                            <div class="hover:bg-gray-200 cursor-pointer px-2 py-1 border-round-sm" (click)="column.editmode = !column.editmode">
-                                <i class="fa-solid fa-ellipsis"></i>
-                            </div>
-                            @if (column.editmode) {
-                                <div class="bg-white absolute py-1" style="width: 190px;">
-                                    <div class="flex cursor-pointer align-content-center hover:bg-gray-200 p-2" (click)="renameColumn()">
-                                        <p class="m-0">Rename</p>
-                                    </div>
-                                    <div class="flex cursor-pointer align-content-center hover:bg-gray-200 p-2" (click)="moveColumn(idx, true)">
-                                        <p class="m-0">Move column left</p>
-                                    </div>
-                                    <div class="flex cursor-pointer align-content-center hover:bg-gray-200 p-2" (click)="moveColumn(idx, false)">
-                                        <p class="m-0">Move column right</p>
-                                    </div>
-                                    <div class="flex cursor-pointer align-content-center hover:bg-gray-200 p-2" (click)="setColumnLimit(idx, 4)">
-                                        <p class="m-0">Set item limit</p>
-                                    </div>
-                                    <div class="flex cursor-pointer align-content-center hover:bg-gray-200 p-2" (click)="deleteColumn(idx)">
-                                        <p class="m-0">Delete</p>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                        @for (item of column.items; track $index) {
-                            <div class="flex flex-column cursor-pointer p-1">
-                                @if(item.image) {
-                                    <div>
-                                        <img style="height: 120px; width: 100%; object-fit: cover;" src="{{item.image}}" alt="">
-                                    </div>
-                                }
-                                <div class="flex flex-column bg-white p-2 gap-2">
-                                    <p class="m-0 text-xs line-height-3">
-                                        {{item.title}}
-                                    </p>
-                                    <div class="flex justify-content-between">
-                                        <div class="flex align-items-center gap-1">
-                                            <div class="border-round-sm bg-blue-500 flex justify-content-center align-items-center" style="width: 20px; height: 20px">
-                                                <i class="fa-solid fa-check text-xs"></i>
-                                            </div>
-                                            <p class="m-0 text-sm">
-                                                {{item.title}}
-                                            </p>
-                                        </div>
-                                        <div pTooltip="Unassigned" tooltipPosition="bottom" class="cursor-pointer border-circle bg-gray-300 flex justify-content-center align-items-center" style="width: 20px; height: 20px">
-                                            <i class="fa-regular fa-user text-xs"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
+                @for (column of project().columns; track column.title; let idx = $index) {
+                    <app-column [column]="column" [idx]="idx" [projectId]="project().projectId" />
                 }
             <div>
                 @if(!creatingColumn()) {
