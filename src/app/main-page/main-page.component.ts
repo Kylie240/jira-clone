@@ -21,7 +21,9 @@ import { ColumnDto } from '../dtos/columnDto';
 })
 export class MainPageComponent {
   value: string = '';
+  newColumnTitle: string = '';
   fullscreenEnabled: WritableSignal<boolean> = signal(false);
+  creatingColumn: WritableSignal<boolean> = signal(false);
   boradColumns: ColumnDto[] = [
     {
       title: 'TO DO',
@@ -52,5 +54,43 @@ export class MainPageComponent {
 
   toggleFullScreen() {
     this.navigationService.toggleFullScreen(this.fullscreenEnabled());
+  }
+
+  toggleColumnCreation(display: boolean = true) {
+    this.creatingColumn.set(display);
+  }
+
+  addNewColumn() {
+    this.boradColumns.push(new ColumnDto(this.newColumnTitle));
+    this.newColumnTitle = '';
+    this.creatingColumn.set(false);
+  }
+
+  renameColumn() {
+
+  }
+
+  moveColumn(index: number, moveLeft: boolean) {
+    if ((moveLeft && index === 0) || (!moveLeft && index === this.boradColumns.length - 1) || this.boradColumns.length === 1) {
+      return;
+    }
+    const columnToMove = this.boradColumns[index];
+    const direction = moveLeft ? -1 : 1;
+    this.boradColumns.slice(index, 1);
+    this.boradColumns.splice(index + direction, 0, columnToMove);
+  }
+
+  setColumnLimit(index: number, limit: number) {
+    this.boradColumns[index].itemLimit = limit;
+  }
+
+  deleteColumn(index: number) {
+    const test = this.boradColumns.slice(index, 1);
+  }
+
+  addColumnItem(index: number) {
+    if (this.boradColumns[index].items.length === this.boradColumns[index].itemLimit) {
+      return;
+    };
   }
 }

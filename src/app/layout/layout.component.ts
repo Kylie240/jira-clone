@@ -3,7 +3,7 @@ import { SideNavigationComponent } from "../side-navigation/side-navigation.comp
 import { NavigationBarComponent } from '../navigation-bar/navigation-bar.component';
 import { MainPageComponent } from '../main-page/main-page.component';
 import { NavigationService } from '../services/navigation.service';
-import { combineLatest } from 'rxjs';
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-layout',
@@ -14,12 +14,11 @@ import { combineLatest } from 'rxjs';
 export class LayoutComponent {
   displaySideNav: WritableSignal<boolean> = signal(true);
   fullScreenEnabled: WritableSignal<boolean> = signal(false);
+  // fullscreenObserver = fromEvent(document, 'keydown');
+
   constructor (
     private navigationService: NavigationService,
   ) {
-    // const topNavObservable = this.navigationService.topNavVisible$;
-    // const sideNavObservable = this.navigationService.sideNavVisible$;
-
     this.navigationService.sideNavVisible$.subscribe((data: boolean) => {
       this.displaySideNav.set(data);
     });
@@ -29,8 +28,10 @@ export class LayoutComponent {
       this.displaySideNav.set(!data);
     });
 
-    // combineLatest([topNavObservable, sideNavObservable]).subscribe(([topnav, sidenav]) => {
-    //   console.log(topnav, sidenav)
-    // })
+    // this.fullscreenObserver.subscribe((data: KeyboardEvent) => {
+    //   if (data.key === 'z') {
+    //     this.fullScreenEnabled.set(!this.fullScreenEnabled());
+    //   }
+    // });
   }
 }

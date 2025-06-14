@@ -14,8 +14,8 @@
                 </div>
             </div>
             <div class="flex gap-2 text-gray-600">
-                <div pTooltip="Full screen" tooltipPosition="bottom" style="height: 32px; width: 32px;" class="flex align-items-center justify-content-center cursor-pointer hover:bg-gray-200 align-items-center p-1 border-1 border-gray-400 border-round-sm">
-                    <i class="fa-solid fa-up-right-and-down-left-from-center" (click)="toggleFullScreen()"></i>
+                <div pTooltip="Full screen" (click)="toggleFullScreen()" tooltipPosition="bottom" style="height: 32px; width: 32px;" class="flex align-items-center justify-content-center cursor-pointer hover:bg-gray-200 align-items-center p-1 border-1 border-gray-400 border-round-sm">
+                    <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
                 </div>
                 <div pTooltip="Share" tooltipPosition="bottom" style="height: 32px; width: 32px;" class="flex align-items-center justify-content-center cursor-pointer hover:bg-gray-200 align-items-center p-1 border-1 border-gray-400 border-round-sm">
                     <i class="fa-solid fa-up-right-from-square"></i>
@@ -138,13 +138,37 @@
         </div>
         <div class="flex h-full pt-3">
             <div class="flex gap-2 h-full">
-                @for (column of boradColumns; track column.title) {
+                @for (column of boradColumns; track column.title; let idx = $index) {
                     <div class="flex flex-column bg-gray-100 border-round-sm" style="width: 250px; min-height: 100%;">
-                        <div class="flex p-3 gap-1" style="cursor: grab;">
-                            <p class="m-0 text-xs">{{column.title}}</p>
-                            <div class="bg-gray-300  px-2 border-round-sm">
-                                <p class="m-0 text-sm">3</p>
+                        <div class="flex px-3 relative  py-2 align-items-center justify-content-between">
+                            <div class="flex align-items-center gap-1" style="cursor: grab;">
+                                <p class="m-0 text-xs">{{column.title}}</p>
+                                <div class="bg-gray-300 px-2 border-round-sm">
+                                    <p class="m-0 text-sm">{{idx + 1}}</p>
+                                </div>
                             </div>
+                            <div class="hover:bg-gray-200 cursor-pointer px-2 py-1 border-round-sm" (click)="column.editmode = !column.editmode">
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </div>
+                            @if (column.editmode) {
+                                <div class="bg-white absolute py-1" style="width: 190px;">
+                                    <div class="flex cursor-pointer align-content-center hover:bg-gray-200 p-2" (click)="renameColumn()">
+                                        <p class="m-0">Rename</p>
+                                    </div>
+                                    <div class="flex cursor-pointer align-content-center hover:bg-gray-200 p-2" (click)="moveColumn(idx, true)">
+                                        <p class="m-0">Move column left</p>
+                                    </div>
+                                    <div class="flex cursor-pointer align-content-center hover:bg-gray-200 p-2" (click)="moveColumn(idx, false)">
+                                        <p class="m-0">Move column right</p>
+                                    </div>
+                                    <div class="flex cursor-pointer align-content-center hover:bg-gray-200 p-2" (click)="setColumnLimit(idx, 4)">
+                                        <p class="m-0">Set item limit</p>
+                                    </div>
+                                    <div class="flex cursor-pointer align-content-center hover:bg-gray-200 p-2" (click)="deleteColumn(idx)">
+                                        <p class="m-0">Delete</p>
+                                    </div>
+                                </div>
+                            }
                         </div>
                         @for (item of column.items; track $index) {
                             <div class="flex flex-column cursor-pointer p-1">
@@ -175,8 +199,26 @@
                         }
                     </div>
                 }
-            <div pTooltip="Create column" tooltipPosition="left" class="flex ml-2 cursor-pointer hover:bg-gray-200 h-2rem w-2rem justify-content-center align-items-center p-1 border-1 border-gray-400 border-round-sm">
-                <i class="fa-solid fa-plus fa-sm"></i>
+            <div>
+                @if(!creatingColumn()) {
+                    <div class="flex ml-2 cursor-pointer hover:bg-gray-200 h-2rem w-2rem justify-content-center align-items-center p-1 border-1 border-gray-400 border-round-sm" pTooltip="Create column" (click)="toggleColumnCreation()" tooltipPosition="left">
+                        <i class="fa-solid fa-plus fa-sm"></i>
+                    </div>
+                } @else {
+                    <div class="flex flex-column align-content-end gap-1" (blur)="toggleColumnCreation(false)">
+                        <div class="flex align-items-center" style="width: 184px;">
+                            <input type="text" pInputText [(ngModel)]="newColumnTitle" (keydown.enter)="addNewColumn()" class="w-full" style="width: 184px;" placeholder="Search board"/>
+                        </div>
+                        <div class="flex gap-1 justify-content-end">
+                            <div style="height: 32px; width: 32px;" (click)="addNewColumn()" class="flex shadow-1 align-items-center justify-content-center cursor-pointer hover:bg-gray-200 align-items-center p-1 border-1 border-gray-400 border-round-sm">
+                                <i class="fa-solid fa-check fa-sm"></i>
+                            </div>
+                            <div style="height: 32px; width: 32px;" (click)="toggleColumnCreation(false)" class="flex shadow-1 align-items-center justify-content-center cursor-pointer hover:bg-gray-200 align-items-center p-1 border-1 border-gray-400 border-round-sm">
+                                <i class="fa-solid fa-x fa-sm"></i>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>
