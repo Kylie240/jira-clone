@@ -1,4 +1,4 @@
-import { Component, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -6,50 +6,113 @@ import { TooltipModule } from 'primeng/tooltip';
 import { NavigationService } from '../services/navigation.service';
 import { NgStyle } from '@angular/common';
 import { ColumnDto } from '../dtos/columnDto';
+import { UserDto } from '../dtos/userDto';
+import { UserService } from '../services/user.service';
+import { AvatarComponent } from '../components/avatar.component';
+import { ItemTypeEnum } from '../enums/itemTypeEnum';
+import { ItemPriorityEnum } from '../enums/itemPriorityEnum';
+import { ItemStatusEnum } from '../enums/itemStatusEnum';
 
 @Component({
   selector: 'app-main-page',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ButtonModule,
     InputTextModule,
     FormsModule,
     TooltipModule,
     NgStyle,
+    AvatarComponent,
   ],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss'
 })
-export class MainPageComponent {
+export class MainPageComponent implements OnInit {
+  readonly itemType = ItemTypeEnum;
+  readonly itemStatus = ItemStatusEnum;
+  readonly itemPriority = ItemPriorityEnum;
   value: string = '';
   newColumnTitle: string = '';
   fullscreenEnabled: WritableSignal<boolean> = signal(false);
   creatingColumn: WritableSignal<boolean> = signal(false);
+  user: WritableSignal<UserDto> = signal(new UserDto());
   boradColumns: ColumnDto[] = [
     {
       title: 'TO DO',
       items: [
         {
+          itemId: '1',
           image: 'https://www.shutterstock.com/image-vector/elearning-banner-online-education-home-260nw-1694176021.jpg',
-          description: 'This is a test of how the description will appear in this small little qhite box of words.',
           title: 'Testing',
-          assignee: '',
+          assignee: '4',
+          type: this.itemType.bug,
+          dateCreated: new Date(),
+          priority: this.itemPriority.none,
         },
       ]
     },
     {
       title: 'IN PROGRESS',
-      items: [],
+      items: [
+        {
+          itemId: '2',
+          image: '',
+          title: 'Testing',
+          assignee: '4',
+          type: this.itemType.bug,
+          dateCreated: new Date(),
+          priority: this.itemPriority.none,
+        },{
+          itemId: '3',
+          image: '',
+          title: 'Testing',
+          assignee: '4',
+          type: this.itemType.bug,
+          dateCreated: new Date(),
+          priority: this.itemPriority.none,
+        },
+      ],
     },
     {
       title: 'DONE',
-      items: [],
+      items: [
+        {
+          itemId: '2',
+          image: '',
+          title: 'Testing',
+          assignee: '4',
+          type: this.itemType.bug,
+          dateCreated: new Date(),
+          priority: this.itemPriority.none,
+        },{
+          itemId: '3',
+          image: '',
+          title: 'Testing',
+          assignee: '4',
+          type: this.itemType.bug,
+          dateCreated: new Date(),
+          priority: this.itemPriority.none,
+        },
+      ],
     },
   ];
+  userList: WritableSignal<UserDto[]> = signal([]);
 
-  constructor ( private navigationService: NavigationService ) {
+  constructor ( 
+    private navigationService: NavigationService,
+    private userService: UserService,
+   ) {
     this.navigationService.fullScreenEnabled$.subscribe((data: boolean) => {
       this.fullscreenEnabled.set(data);
     });
+
+    this.userService.user$.subscribe((data: UserDto) => {
+      this.user.set(data);
+    });
+  }
+
+  ngOnInit(): void {
+    this.userList.set(this.userService.userGetTeam(this.user().teams[0]));
   }
 
   toggleFullScreen() {

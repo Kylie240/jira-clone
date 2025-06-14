@@ -1,4 +1,4 @@
-import { Component, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, WritableSignal } from '@angular/core';
 import { SideNavigationComponent } from "../side-navigation/side-navigation.component";
 import { NavigationBarComponent } from '../navigation-bar/navigation-bar.component';
 import { MainPageComponent } from '../main-page/main-page.component';
@@ -7,6 +7,7 @@ import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-layout',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [SideNavigationComponent, NavigationBarComponent, MainPageComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss'

@@ -13,17 +13,15 @@
         <p-button label="Create" icon="fa-solid fa-plus"/>
     </div>
     <div class="flex gap-1 align-items-center justify-content-end text-gray-600" style="width: 300px;">
-        <div style="width: 32px; height: 32px;" class="flex cursor-pointer align-items-center justify-content-center border-round-sm hover:bg-gray-200">
+        <div style="width: 32px; height: 32px;" tooltipPosition="bottom" pTooltip="Notifications" class="flex cursor-pointer align-items-center justify-content-center border-round-sm hover:bg-gray-200">
             <i class="fa-regular fa-bell fa-md"></i>
         </div>
-        <div style="width: 32px; height: 32px;" class="flex cursor-pointer align-items-center justify-content-center border-round-sm hover:bg-gray-200">
+        <div style="width: 32px; height: 32px;" tooltipPosition="bottom" pTooltip="Help" class="flex cursor-pointer align-items-center justify-content-center border-round-sm hover:bg-gray-200">
             <i class="fa-regular fa-circle-question fa-md"></i>
         </div>
-        <div style="width: 32px; height: 32px;" class="flex cursor-pointer align-items-center justify-content-center border-round-sm hover:bg-gray-200">
+        <div style="width: 32px; height: 32px;" tooltipPosition="bottom" pTooltip="Settings" class="flex cursor-pointer align-items-center justify-content-center border-round-sm hover:bg-gray-200">
             <i class="fa-solid fa-gear fa-md"></i>
         </div>
-        <div class="border-circle bg-blue-500 flex justify-content-center align-items-center" style="width: 24px; height: 24px">
-            <p class="text-white" style="font-size: 11px;">KO</p>
-        </div>
+        <app-avatar [user]="user()"/>
     </div>
 </div>

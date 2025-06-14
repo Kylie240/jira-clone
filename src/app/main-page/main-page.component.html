@@ -1,6 +1,6 @@
 <div class="flex flex-column h-full w-full">
     <div class="flex flex-column w-full gap-1 justify-content-center pt-2" [ngStyle]="{'height' : fullscreenEnabled() ? '' : '104px'}">
-        <div class="flex justify-content-between px-4">
+        <div class="flex justify-content-between px-3">
             <div class="flex flex-column">
                 @if(!fullscreenEnabled()) {
                     <p class="m-0 text-xs text-gray-600 text-lg">Projects</p>
@@ -14,12 +14,14 @@
                 </div>
             </div>
             <div class="flex gap-2 text-gray-600">
-                <div pTooltip="Full screen" (click)="toggleFullScreen()" tooltipPosition="bottom" style="height: 32px; width: 32px;" class="flex align-items-center justify-content-center cursor-pointer hover:bg-gray-200 align-items-center p-1 border-1 border-gray-400 border-round-sm">
+                <div [pTooltip]="fullscreenEnabled() ? 'Exit ' : 'Enter ' + 'full screen'" (click)="toggleFullScreen()" tooltipPosition="bottom" style="height: 32px; width: 32px;" class="flex align-items-center justify-content-center cursor-pointer hover:bg-gray-200 align-items-center p-1 border-1 border-gray-400 border-round-sm">
                     <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
                 </div>
-                <div pTooltip="Share" tooltipPosition="bottom" style="height: 32px; width: 32px;" class="flex align-items-center justify-content-center cursor-pointer hover:bg-gray-200 align-items-center p-1 border-1 border-gray-400 border-round-sm">
-                    <i class="fa-solid fa-up-right-from-square"></i>
-                </div>
+                @if(!fullscreenEnabled()) {
+                    <div pTooltip="Share" tooltipPosition="bottom" style="height: 32px; width: 32px;" class="flex align-items-center justify-content-center cursor-pointer hover:bg-gray-200 align-items-center p-1 border-1 border-gray-400 border-round-sm">
+                        <i class="fa-solid fa-up-right-from-square"></i>
+                    </div>
+                }
             </div>
         </div>
         @if(!fullscreenEnabled()) {
@@ -111,14 +113,9 @@
                 <div class="flex align-items-center" style="width: 184px;">
                     <input type="text" pInputText [(ngModel)]="value" class="w-full" style="width: 184px;" placeholder="Search board"/>
                 </div>
-                <div class="flex">
-                    <div pTooltip="Unassigned" tooltipPosition="bottom" class="cursor-pointer border-circle bg-gray-500 flex justify-content-center align-items-center" style="width: 24px; height: 24px">
-                        <i class="fa-regular fa-user text-xs"></i>
-                    </div>
-                    <div pTooltip="Kylie Oliver" tooltipPosition="bottom" class="cursor-pointer border-circle bg-blue-500 flex justify-content-center align-items-center" style="width: 24px; height: 24px">
-                        <p class="text-white" style="font-size: 11px;">KO</p>
-                    </div>
-                </div>
+                @for(user of userList(); track $index) {
+                    <app-avatar [user]="user"/>
+                }
             </div>
             <div class="flex gap-2">
                 <div style="height: 32px" class="flex px-2 align-items-center justify-content-center cursor-pointer hover:bg-gray-200 align-items-center gap-1 p-1 border-1 border-gray-400 border-round-sm">
@@ -179,7 +176,7 @@
                                 }
                                 <div class="flex flex-column bg-white p-2 gap-2">
                                     <p class="m-0 text-xs line-height-3">
-                                        {{item.description}}
+                                        {{item.title}}
                                     </p>
                                     <div class="flex justify-content-between">
                                         <div class="flex align-items-center gap-1">
