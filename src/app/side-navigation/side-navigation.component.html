@@ -5,7 +5,7 @@
         </div>
         <p>For you</p>
     </div>
-    <div class="flex justify-content-between align-items-center hover:bg-gray-200 border-round-sm px-2 cursor-pointer">
+    <div class="flex relative justify-content-between align-items-center hover:bg-gray-200 border-round-sm px-2 cursor-pointer" (click)="toggleRecent()">
         <div class="flex align-items-center gap-3" style="height: 32px;">
             <div style="width: 20px;">
                 <i class="fa-regular fa-clock fa-md"></i>
@@ -15,8 +15,32 @@
         <div style="width: 20px;">
             <i class="fa-solid fa-chevron-right fa-sm"></i>
         </div>
+        @if(showRecent()) {
+            <div class="bg-white absolute p-3 shadow-1 z-2" style="width: 400px; height: 475px; left: 220px; top: 0px">
+                <h4 class="my-2 ml-2">Recent</h4>
+                <p-listbox 
+                    [options]="starredItems()" 
+                    (onChange)="handleReroute()"
+                    [filter]="true" 
+                    [style]="{ width: '20rem' }" 
+                    [listStyle]="{'height': '300px'}">
+                    <ng-template let-item pTemplate="item">
+                        <div class="flex align-items-center gap-2">
+                            <div class="border-round-sm" style="width: 20px; height: 20px;" [style.background-color]="item.color">
+                                <i class="{{item.icon}}"></i>
+                            </div>
+                            <div class="flex flex-column">
+                                <div class="flex gap-2">
+                                    <p>{{ item.name }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-listbox>
+            </div>
+        }
     </div>
-    <div class="flex justify-content-between align-items-center hover:bg-gray-200 border-round-sm cursor-pointer px-2" style="height: 32px;">
+    <div class="flex relative justify-content-between align-items-center hover:bg-gray-200 border-round-sm cursor-pointer px-2" style="height: 32px;" (click)="toggleStarred()">
         <div class="flex align-items-center gap-3">
             <div style="width: 20px;">
                 <i class="fa-regular fa-star fa-md"></i>
@@ -26,24 +50,124 @@
         <div style="width: 20px;">
             <i class="fa-solid fa-chevron-right fa-sm"></i>
         </div>
+        @if(showStarred()) {
+            <div class="bg-white absolute p-3 shadow-1 z-2" style="width: 400px; height: 475px; left: 220px; top: 0px">
+                <h4 class="my-2 ml-2">Starred</h4>
+                <p-listbox 
+                    [options]="starredItems()" 
+                    (onChange)="handleReroute()"
+                    [filter]="true" 
+                    [style]="{ width: '20rem' }" 
+                    [listStyle]="{'height': '300px'}">
+                    <ng-template let-item pTemplate="item">
+                        <div class="flex align-items-center gap-2">
+                            <div class="border-round-sm" style="width: 20px; height: 20px;" [style.background-color]="item.color">
+                                <i class="{{item.icon}}"></i>
+                            </div>
+                            <div class="flex flex-column">
+                                <div class="flex gap-2">
+                                    <p>{{ item.name }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-listbox>
+            </div>
+        }
     </div>
-    <div class="flex align-items-center gap-3 hover:bg-gray-200 border-round-sm  cursor-pointer px-2" style="height: 32px;">
+    <div class="flex align-items-center gap-3 hover:bg-gray-200 border-round-sm  cursor-pointer px-2" style="height: 32px;" (click)="toggleApps()">
         <div style="width: 20px;">
             <i class="fa-solid fa-grip fa-md"></i>
         </div>
         <p>Apps</p>
     </div>
-    <div class="flex align-items-center gap-3 cursor-pointer hover:bg-gray-200 border-round-sm px-2" style="height: 32px;">
+    <div class="px-2">
+        @if(showApps()) {
+                @if(appItems()) {
+                    @for(app of appItems(); track $index) {
+                        <p>app.name</p>
+                    }
+                }
+                <div class="flex align-items-center gap-1 cursor-pointer hover:bg-gray-200 border-round-sm px-2" style="height: 32px;">
+                    <div style="width: 20px;">
+                        <i class="fa-solid fa-grip"></i>
+                    </div>
+                    <p>Explore more apps</p>
+                </div>
+            }
+    </div>
+    <div class="flex align-items-center gap-3 cursor-pointer hover:bg-gray-200 border-round-sm px-2" style="height: 32px;" (click)="togglePlans()">
         <div style="width: 20px;">
             <i class="fa-solid fa-bars-progress fa-md"></i>
         </div>
         <p>Plans</p>
     </div>
-    <div class="flex align-items-center gap-3 cursor-pointer hover:bg-gray-200 border-round-sm px-2" style="height: 32px;">
+    <div class="px-2">
+        @if(showPlans()) {
+            @if(planItems()) {
+                @for(plan of planItems(); track $index) {
+                    <p>plan.name</p>
+                }
+            } @else {
+                <p class="text-xs line-height-3 py-1 px-2">Once you open or create plans, they'll show up here.</p>
+            }
+            <div class="flex align-items-center gap-1 cursor-pointer hover:bg-gray-200 border-round-sm px-2" style="height: 32px;">
+                <div style="width: 20px;">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                </div>
+                <p>View all plans</p>
+            </div>
+        }
+    </div>
+    <div class="flex align-items-center gap-3 cursor-pointer hover:bg-gray-200 border-round-sm px-2" style="height: 32px;" (click)="toggleProjects()">
         <div style="width: 20px;">
             <i class="fa-solid fa-rocket fa-md"></i>
         </div>
         <p>Projects</p>
+    </div>
+    <div class="flex flex-column px-2">
+        @if(showProjects()) {
+           @if(projectItems()) {
+               @for(project of projectItems(); track $index) {
+                    <p class="text-sm line-height-3 py-1 px-2 text-gray-500">Starred</p>
+                   <div class="flex align-items-center gap-1 hover:bg-gray-300 cursor-pointer py-2 border-round-sm px-1">
+                       <div class="border-round-sm" style="width: 20px; height: 20px;" [style.background-color]="project.color">
+                           <i class="{{project.icon}}"></i>
+                       </div>
+                       <div class="flex flex-column">
+                           <div class="flex gap-2">
+                               <p class="text-sm" style="width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin: 0;">
+                                    {{ project.name }}
+                                </p>
+                           </div>
+                       </div>
+                   </div>
+               }
+               @for(project of recentItems(); track $index) {
+                    <p class="text-sm line-height-3 py-1 px-2 text-gray-500">Recent</p>
+                   <div class="flex align-items-center gap-1 hover:bg-gray-300 cursor-pointer py-2 border-round-sm px-1">
+                       <div class="border-round-sm" style="width: 20px; height: 20px;" [style.background-color]="project.color">
+                           <i class="{{project.icon}}"></i>
+                       </div>
+                       <div class="flex flex-column">
+                           <div class="flex gap-2">
+                               <p class="text-sm" style="width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin: 0;">
+                                    {{ project.name }}
+                                </p>
+                           </div>
+                       </div>
+                   </div>
+               }
+               <div class="flex align-items-center gap-1 cursor-pointer hover:bg-gray-200 border-round-sm px-2 mt-1" style="height: 32px;">
+                   <div style="width: 20px;">
+                       <i class="fa-solid fa-bars-staggered"></i>
+                   </div>
+                   <p>View all projects</p>
+               </div>
+               } @else {
+                   <p class="text-xs line-height-3 py-1 px-2">No projects to show.</p>
+               }
+           }
     </div>
     <div class="flex align-items-center gap-3 cursor-pointer hover:bg-gray-200 border-round-sm px-2" style="height: 32px;">
         <div style="width: 20px;">

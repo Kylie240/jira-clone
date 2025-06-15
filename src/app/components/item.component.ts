@@ -33,7 +33,7 @@ template: `
             </p>
             <div class="flex justify-content-between align-items-center">
                 <div class="flex align-items-center gap-1">
-                    <div class="border-round-sm  flex justify-content-center align-items-center" style="width: 20px; height: 20px; background-color : {{item().taskType | taskColor}}">
+                    <div class="border-round-sm  flex justify-content-center align-items-center" style="width: 20px; height: 20px; background-color: {{item().taskType | taskColor}}">
                         <i class="{{item().taskType | taskIcon}} text-xs"></i>
                     </div>
                     <p class="m-0 text-sm">

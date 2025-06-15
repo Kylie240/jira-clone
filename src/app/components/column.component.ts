@@ -251,6 +251,8 @@ export class ColumnComponent {
         email: null,
         password: null,
         teams: null,
+        projects: [],
+        starred: null,
     }));
   }
 

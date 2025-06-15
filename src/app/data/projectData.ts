@@ -4,6 +4,7 @@ export const projects: ProjectDto[] = [
     {
         projectId: '7c6102b0-ad6e-46de-92a2-a7b39ce9607e',
         name: '(Welcome) To My Jira Clone',
+        icon: {icon: 'fa-solid fa-people-line', color: 'red'},
         taskTypes: [
             {
                 taskId: 1,

@@ -4,6 +4,8 @@ import { UserDto } from '../dtos/userDto';
 import { users } from '../data/userData';
 import { teams } from '../data/teamData';
 import { TeamDto } from '../dtos/teamDto';
+import { projects } from '../data/projectData';
+import { sideNavDto } from '../dtos/sideNavDto';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +21,8 @@ export class UserService {
     email: 'olivkylie@gmail.com',
     password: '1234',
     teams: ['8a1f2149-0ee9-4c2d-b982-5c814defa813'], 
+    projects: ['7c6102b0-ad6e-46de-92a2-a7b39ce9607e'],
+    starred: ['7c6102b0-ad6e-46de-92a2-a7b39ce9607e'],
   });
   user$ = this.userSource.asObservable();
 
@@ -41,5 +45,33 @@ export class UserService {
 
     const teamMembers = users.filter(user => team.members.includes(user.userId));
     return teamMembers;
+  }
+
+  getStarredProjects(userId: string) {
+    const user = users.find(u => userId === userId);
+    if (user) {
+      const starredList = user.starred;
+      const projectArr = projects.filter(p => starredList.includes(p.projectId));
+      return projectArr.map(p => new sideNavDto(p.projectId, p.name, p.icon.icon, p.icon.color));
+    }
+    return [];
+  }
+
+  getUserProjects(userId: string) {
+    const user = users.find(u => userId === userId);
+    if (user) {
+      const projectArr = projects.filter(p => user.projects.includes(p.projectId));
+      return projectArr.map(p => new sideNavDto(p.projectId, p.name, p.icon.icon, p.icon.color));
+    }
+    return [];
+  }
+
+  getRecentItems(userId: string) {
+    const user = users.find(u => userId === userId);
+    if (user) {
+      const projectArr = projects.filter(p => user.starred.includes(p.projectId));
+      return projectArr.map(p => new sideNavDto(p.projectId, p.name, p.icon.icon, p.icon.color));
+    }
+    return [];
   }
 }

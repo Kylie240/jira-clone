@@ -6,4 +6,6 @@ export class UserDto {
     email: string;
     password: string;
     teams: string[];
+    projects: string[];
+    starred: string[];
 }

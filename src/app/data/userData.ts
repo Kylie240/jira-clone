@@ -9,6 +9,8 @@ export const users: UserDto[] = [
         email: 'olivkylie@gmail.com',
         password: '1234',
         teams: ['8a1f2149-0ee9-4c2d-b982-5c814defa813'], 
+        projects: ['7c6102b0-ad6e-46de-92a2-a7b39ce9607e'],
+        starred: ['7c6102b0-ad6e-46de-92a2-a7b39ce9607e'],
     },
     {
         userId: '2',
@@ -18,6 +20,8 @@ export const users: UserDto[] = [
         email: 'micmilly@gmail.com',
         password: '1234',
         teams: ['8a1f2149-0ee9-4c2d-b982-5c814defa813'], 
+        projects: ['7c6102b0-ad6e-46de-92a2-a7b39ce9607e'],
+        starred: [],
     },
     {
         userId: '3',
@@ -27,6 +31,8 @@ export const users: UserDto[] = [
         email: 'leah2012@gmail.com',
         password: '1234',
         teams: [], 
+        projects: ['7c6102b0-ad6e-46de-92a2-a7b39ce9607e'],
+        starred: ['7c6102b0-ad6e-46de-92a2-a7b39ce9607e'],
     },
     {
         userId: '4',
@@ -36,6 +42,8 @@ export const users: UserDto[] = [
         email: 'chrissy23@gmail.com',
         password: '1234',
         teams: ['8a1f2149-0ee9-4c2d-b982-5c814defa813'], 
+        projects: ['7c6102b0-ad6e-46de-92a2-a7b39ce9607e'],
+        starred: ['7c6102b0-ad6e-46de-92a2-a7b39ce9607e'],
     },
     {
         userId: '5',
@@ -45,5 +53,7 @@ export const users: UserDto[] = [
         email: 'martymar@gmail.com',
         password: '1234',
         teams: [], 
+        projects: ['7c6102b0-ad6e-46de-92a2-a7b39ce9607e'],
+        starred: [],
     },
 ]

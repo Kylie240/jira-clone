@@ -6,7 +6,9 @@
                     <p class="m-0 text-xs text-gray-600 text-lg">Projects</p>
                 }
                 <div class="flex align-items-center gap-2">
-                    <div class="bg-red-400 border-round-sm" style="width: 20px; height: 20px;"></div>
+                    <div class="border-round-sm" style="width: 20px; height: 20px;" [style.background-color]="project().icon.color">
+                        <i class="{{project().icon.icon}}"></i>
+                    </div>
                     <h2 class="m-0 text-gray-800">{{project().name}}</h2>
                     <div class="hover:bg-gray-200 cursor-pointer px-2 py-1 border-round-sm">
                         <i class="fa-solid fa-ellipsis"></i>
