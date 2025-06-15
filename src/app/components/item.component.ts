@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component, input } from "@angular/core";
 import { TooltipModule } from "primeng/tooltip";
 import { ColumnItemDto } from "../dtos/columnItemDto";
+import { TaskIconPipe } from "../pipes/taskIcon.pipe";
+import { TaskColorPipe } from "../pipes/taskColor.pipe";
+import { AvatarComponent } from "./avatar.component";
 
 @Component({
   selector: 'app-item',
@@ -8,6 +11,9 @@ import { ColumnItemDto } from "../dtos/columnItemDto";
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     TooltipModule,
+    TaskIconPipe,
+    TaskColorPipe,
+    AvatarComponent,
   ],
 template: `
     <div class="flex flex-column cursor-pointer p-1">
@@ -22,16 +28,14 @@ template: `
             </p>
             <div class="flex justify-content-between">
                 <div class="flex align-items-center gap-1">
-                    <div class="border-round-sm bg-blue-500 flex justify-content-center align-items-center" style="width: 20px; height: 20px">
-                        <i class="fa-solid fa-check text-xs"></i>
+                    <div class="border-round-sm  flex justify-content-center align-items-center" style="width: 20px; height: 20px; background-color : {{item().taskType | taskColor}}">
+                        <i class="{{item().taskType | taskIcon}} text-xs"></i>
                     </div>
                     <p class="m-0 text-sm">
                         {{item().title}}
                     </p>
                 </div>
-                <div pTooltip="Unassigned" tooltipPosition="bottom" class="cursor-pointer border-circle bg-gray-300 flex justify-content-center align-items-center" style="width: 20px; height: 20px">
-                    <i class="fa-regular fa-user text-xs"></i>
-                </div>
+                <app-avatar [userId]="item().assignee" />
             </div>
         </div>
     </div>

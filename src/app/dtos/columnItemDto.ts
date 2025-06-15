@@ -3,7 +3,7 @@ export class ColumnItemDto {
     image: string; 
     title: string; 
     assignee: string;
-    type: number;
+    taskType: number = 1;
     dateCreated: Date;
     priority: number;
     editmode?: boolean;

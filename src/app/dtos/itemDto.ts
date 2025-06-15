@@ -10,4 +10,5 @@ export class ItemDto extends ColumnItemDto {
     tags: string[];
     comments: CommentDto[];
     history: HistoryDto[];
+    linkedTasks: string[];
 }

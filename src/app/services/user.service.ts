@@ -22,7 +22,7 @@ export class UserService {
   });
   user$ = this.userSource.asObservable();
 
-  getUser(userId: string) {
+  getUserById(userId: string): UserDto {
     const user = users.find(user => user.userId === userId);
     return user;
   }
