@@ -1,4 +1,4 @@
-<div class="flex flex-column gap-1 py-4 h-full px-2 text-gray-600" style="width: 240px; border-right: 1px solid lightgray;">
+<div class="flex flex-column gap-1 py-4 h-full px-2 text-gray-600 z-3 bg-white" style="width: 240px; border-right: 1px solid lightgray;" [ngClass]="isTablet() ? 'absolute shadow-2 border-round-md' : ''">
     <div class="flex align-items-center gap-3 cursor-pointer hover:bg-gray-200 border-round-sm px-2" style="height: 32px;">
         <div style="width: 20px;">
             <i class="fa-regular fa-circle-user fa-md"></i>
@@ -16,7 +16,7 @@
             <i class="fa-solid fa-chevron-right fa-sm"></i>
         </div>
         @if(showRecent()) {
-            <div class="bg-white absolute p-3 shadow-1 z-2" style="width: 400px; height: 475px; left: 220px; top: 0px">
+            <div class="bg-white absolute p-3 shadow-2 border-round-md z-2" style="width: 400px; height: 475px; left: 220px; top: 0px">
                 <h4 class="my-2 ml-2">Recent</h4>
                 <p-listbox 
                     [options]="starredItems()" 
@@ -51,7 +51,7 @@
             <i class="fa-solid fa-chevron-right fa-sm"></i>
         </div>
         @if(showStarred()) {
-            <div class="bg-white absolute p-3 shadow-1 z-2" style="width: 400px; height: 475px; left: 220px; top: 0px">
+            <div class="bg-white absolute p-3 shadow-2 border-round-md z-2" style="width: 400px; height: 475px; left: 220px; top: 0px">
                 <h4 class="my-2 ml-2">Starred</h4>
                 <p-listbox 
                     [options]="starredItems()" 

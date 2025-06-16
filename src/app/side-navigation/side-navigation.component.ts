@@ -4,11 +4,14 @@ import { ProjectService } from '../services/project.service';
 import { UserDto } from '../dtos/userDto';
 import { sideNavDto } from '../dtos/sideNavDto';
 import { ListboxModule } from 'primeng/listbox';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-side-navigation',
   imports: [
-    ListboxModule
+    ListboxModule,
+    NgClass,
   ],
   templateUrl: './side-navigation.component.html',
   styles: `
@@ -29,6 +32,10 @@ export class SideNavigationComponent implements OnInit {
   showApps: WritableSignal<boolean> = signal(false);
   showPlans: WritableSignal<boolean> = signal(false);
   showProjects: WritableSignal<boolean> = signal(false);
+  isTablet: WritableSignal<boolean> = signal(false);
+  isSmallDevice: WritableSignal<boolean> = signal(false);
+  readonly tabletBreakpoint = '(max-width: 1024px)';
+  readonly smallDeviceBreakpoint = '(max-width: 750px)'
   //Menu items
   recentItems: WritableSignal<sideNavDto[]> = signal(null);
   starredItems: WritableSignal<sideNavDto[]> = signal(null);
@@ -36,11 +43,16 @@ export class SideNavigationComponent implements OnInit {
   planItems: WritableSignal<sideNavDto[]> = signal(null);
   projectItems: WritableSignal<sideNavDto[]> = signal(null);
 
+
   constructor (
     private userService: UserService,
     private projectService: ProjectService,
+    private breakpointObserver: BreakpointObserver,
   ) {
-
+    this.breakpointObserver.observe([this.tabletBreakpoint, this.smallDeviceBreakpoint]).subscribe(data => {
+        this.isTablet.set(data.breakpoints[this.tabletBreakpoint]);
+        this.isSmallDevice.set(data.breakpoints[this.smallDeviceBreakpoint]);
+      });
   }
 
   ngOnInit(): void {

@@ -1,0 +1,45 @@
+<div class="flex flex-column w-full gap-1 justify-content-center pt-2" style="max-width: 100%;" [ngStyle]="{'height' : fullscreenEnabled() ? '' : '104px'}">
+    <div class="flex justify-content-between px-3">
+        <div class="flex flex-column">
+            @if(!fullscreenEnabled()) {
+                <p class="m-0 text-xs text-gray-600 text-lg">Projects</p>
+            }
+            <div class="flex align-items-center gap-2">
+                <div class="border-round-sm" style="width: 20px; height: 20px;" [style.background-color]="project().icon.color">
+                    <i class="{{project().icon.icon}}"></i>
+                </div>
+                <h2 class="m-0 text-gray-800">{{project().name}}</h2>
+                <div class="hover:bg-gray-200 cursor-pointer px-2 py-1 border-round-sm">
+                    <i class="fa-solid fa-ellipsis"></i>
+                </div>
+            </div>
+        </div>
+        <div class="flex gap-2 text-gray-600">
+            <div [pTooltip]="fullscreenEnabled() ? 'Exit ' : 'Enter ' + 'full screen'" (click)="toggleFullScreen()" tooltipPosition="bottom" style="height: 32px; width: 32px;" class="flex align-items-center justify-content-center cursor-pointer hover:bg-gray-200 align-items-center p-1 border-1 border-gray-400 border-round-sm">
+                <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+            </div>
+            @if(!fullscreenEnabled()) {
+                <div pTooltip="Share" tooltipPosition="bottom" style="height: 32px; width: 32px;" class="flex align-items-center justify-content-center cursor-pointer hover:bg-gray-200 align-items-center p-1 border-1 border-gray-400 border-round-sm">
+                    <i class="fa-solid fa-up-right-from-square"></i>
+                </div>
+            }
+        </div>
+    </div>
+    @if(!fullscreenEnabled()) {
+        <div style="border-bottom: 1px solid lightgray">
+            <div class="flex align-items-center mt-2 gap-4 text-gray-600 px-4">
+                @for(item of projectMenu(); track $index) {
+                    <div class="flex align-items-center cursor-pointer">
+                        <div style="width: 20px;">
+                            <i class="{{item.icon}} fa-md"></i>
+                        </div>
+                        <p class="text-md m-0" style="width: fit-content">{{item.name}}</p>
+                    </div>
+                }
+                <div class="hover:bg-gray-200 cursor-pointer px-2 py-1 border-round-sm">
+                    <i class="fa-solid fa-plus"></i>
+                </div>
+            </div>
+        </div>
+    }
+</div>

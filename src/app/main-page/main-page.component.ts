@@ -3,9 +3,6 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
-import { NavigationService } from '../services/navigation.service';
-import { NgStyle } from '@angular/common';
-import { ColumnDto } from '../dtos/columnDto';
 import { UserDto } from '../dtos/userDto';
 import { UserService } from '../services/user.service';
 import { AvatarComponent } from '../components/avatar.component';
@@ -15,6 +12,7 @@ import { ItemStatusEnum } from '../enums/itemStatusEnum';
 import { ColumnComponent } from '../components/column.component';
 import { ProjectDto } from '../dtos/projectDto';
 import { ProjectService } from '../services/project.service';
+import { ProjectHeaderComponent } from '../project-header/project-header.component';
 
 @Component({
   selector: 'app-main-page',
@@ -24,7 +22,7 @@ import { ProjectService } from '../services/project.service';
     InputTextModule,
     FormsModule,
     TooltipModule,
-    NgStyle,
+    ProjectHeaderComponent,
     AvatarComponent,
     ColumnComponent,
   ],
@@ -44,14 +42,9 @@ export class MainPageComponent implements OnInit {
   project: WritableSignal<ProjectDto> = signal(null);
 
   constructor ( 
-    private navigationService: NavigationService,
     private userService: UserService,
     private projectService: ProjectService,
    ) {
-    this.navigationService.fullScreenEnabled$.subscribe((data: boolean) => {
-      this.fullscreenEnabled.set(data);
-    });
-
     this.userService.user$.subscribe((data: UserDto) => {
       this.user.set(data);
     });
@@ -69,10 +62,6 @@ export class MainPageComponent implements OnInit {
 
   getProject() {
     this.project.set(this.projectService.getProject('7c6102b0-ad6e-46de-92a2-a7b39ce9607e'));
-  }
-
-  toggleFullScreen() {
-    this.navigationService.toggleFullScreen(this.fullscreenEnabled());
   }
 
   toggleColumnCreation(display: boolean = true) {

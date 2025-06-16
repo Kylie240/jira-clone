@@ -1,27 +1,44 @@
 <div class="flex w-full justify-content-between align-items-center px-3" style="height: 48px; border-bottom: 1px solid lightgray;">
-    <div class="flex gap-1 align-items-center" style="width: 300px;">
+    <div class="flex gap-1 align-items-center" style="width: 200px;">
         <div style="width: 32px; height: 32px;" (click)="toggleSideNav()" pTooltip="Collapse sidebar" class="flex cursor-pointer align-items-center justify-content-center border-round-sm hover:bg-gray-200">
             <i class="fa-solid fa-arrow-right-arrow-left"></i>
         </div>
-        <div class="flex align-items-center gap-2 cursor-pointer px-1 hover:bg-gray-200 border-round-md" style="height: 32px;">
-            <i class="fa-solid text-blue-600 fa-square-arrow-up-right fa-xl"></i>
-            Jira
+        <div class="flex align-items-center justify-content-center gap-2 cursor-pointer px-1 hover:bg-gray-200 border-round-md" style="height: 32px;">
+            <i class="fa-solid text-blue-600 fa-square-arrow-up-right fa-2xl"></i>
+            @if (!isSmallDevice()) {Jira}
         </div>
+        @if (isSmallDevice()) {
+        <div class="flex cursor-pointer hover:bg-gray-200 h-2rem w-2rem justify-content-center align-items-center p-1 border-1 border-gray-400 border-round-sm" pTooltip="Create column" (click)="toggleMoreMenu()" tooltipPosition="left">
+            <i class="fa-solid fa-magnifying-glass text-gray-500 fa-sm"></i>
+        </div>
+    }
     </div>
-    <div class="flex align-items-center gap-2 " style="width: 800px;">
-        <input type="text" [style]="{'height':'32px'}" pInputText [(ngModel)]="value" class="w-full" placeholder="Search"/>
-        <p-button label="Create" icon="fa-solid fa-plus"/>
-    </div>
-    <div class="flex gap-1 align-items-center justify-content-end text-gray-600" style="width: 300px;">
-        <div style="width: 32px; height: 32px;" tooltipPosition="bottom" pTooltip="Notifications" class="flex cursor-pointer align-items-center justify-content-center border-round-sm hover:bg-gray-200">
-            <i class="fa-regular fa-bell fa-md"></i>
+    @if (!isSmallDevice()) {
+        <div class="flex align-items-center gap-2 " style="width: 800px;">
+            <input type="text" [style]="{'height':'32px'}" pInputText [(ngModel)]="value" class="w-full" placeholder="Search"/>
+            <p-button label="Create" icon="fa-solid fa-plus"/>
         </div>
-        <div style="width: 32px; height: 32px;" tooltipPosition="bottom" pTooltip="Help" class="flex cursor-pointer align-items-center justify-content-center border-round-sm hover:bg-gray-200">
-            <i class="fa-regular fa-circle-question fa-md"></i>
+    }
+    @if(!isSmallDevice() || (isSmallDevice() && moreMenuVisible())) {
+        <div class="flex gap-1 align-items-center justify-content-end text-gray-600" style="width: 200px;" [ngClass]="isSmallDevice() ? 'more-menu shadow-2 border-round-md p-2' : ''">
+            <div style="width: 32px; height: 32px;" tooltipPosition="bottom" pTooltip="Notifications" class="flex cursor-pointer align-items-center justify-content-center border-round-sm hover:bg-gray-200">
+                <i class="fa-regular fa-bell fa-md"></i>
+            </div>
+            <div style="width: 32px; height: 32px;" tooltipPosition="bottom" pTooltip="Help" class="flex cursor-pointer align-items-center justify-content-center border-round-sm hover:bg-gray-200">
+                <i class="fa-regular fa-circle-question fa-md"></i>
+            </div>
+            <div style="width: 32px; height: 32px;" tooltipPosition="bottom" pTooltip="Settings" class="flex cursor-pointer align-items-center justify-content-center border-round-sm hover:bg-gray-200">
+                <i class="fa-solid fa-gear fa-md"></i>
+            </div>
+            <app-avatar [user]="user()"/>
         </div>
-        <div style="width: 32px; height: 32px;" tooltipPosition="bottom" pTooltip="Settings" class="flex cursor-pointer align-items-center justify-content-center border-round-sm hover:bg-gray-200">
-            <i class="fa-solid fa-gear fa-md"></i>
+    } 
+    @if (isSmallDevice()) {
+        <div class="flex gap-2">
+            <p-button label="Create" icon="fa-solid fa-plus"/>
+            <div class="flex cursor-pointer hover:bg-gray-200 h-2rem w-2rem justify-content-center align-items-center p-1 border-1 border-gray-400 border-round-sm" pTooltip="Show more" (click)="toggleMoreMenu()" tooltipPosition="bottom">
+                <i class="fa-solid fa-ellipsis fa-sm"></i>
+            </div>
         </div>
-        <app-avatar [user]="user()"/>
-    </div>
+    }
 </div>
