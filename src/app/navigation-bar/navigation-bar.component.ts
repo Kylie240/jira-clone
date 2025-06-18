@@ -8,7 +8,7 @@ import { UserDto } from '../dtos/userDto';
 import { AvatarComponent } from '../components/avatar.component';
 import { UserService } from '../services/user.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { NgClass } from '@angular/common';
+import { NgClass, NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -20,6 +20,7 @@ import { NgClass } from '@angular/common';
     TooltipModule,
     AvatarComponent,
     NgClass,
+    NgStyle
   ],
   templateUrl: './navigation-bar.component.html',
   styles: `

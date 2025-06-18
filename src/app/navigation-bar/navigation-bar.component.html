@@ -1,11 +1,15 @@
 <div class="flex w-full justify-content-between align-items-center px-3" style="height: 48px; border-bottom: 1px solid lightgray;">
     <div class="flex gap-1 align-items-center" style="width: 200px;">
-        <div style="width: 32px; height: 32px;" (click)="toggleSideNav()" pTooltip="Collapse sidebar" class="flex cursor-pointer align-items-center justify-content-center border-round-sm hover:bg-gray-200">
-            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+        <div style="width: 32px; height: 32px" (click)="toggleSideNav()" pTooltip="Collapse sidebar" class="flex cursor-pointer align-items-center justify-content-center border-round-sm hover:bg-gray-200">
+            <div style="width: 16px; height: 16px; border: 2px solid gray; padding: 0px 2px;" class="flex align-items-center border-round-xs">
+                <i class="relative fa-solid text-gray-500 text-xs {{sideNavVisible ? 'fa-chevron-left border-left-2' : 'fa-chevron-right border-right-2'}}" [ngStyle]="{'left' : sideNavVisible ? '' : '-2px'}"></i>
+            </div>
         </div>
         <div class="flex align-items-center justify-content-center gap-2 cursor-pointer px-1 hover:bg-gray-200 border-round-md" style="height: 32px;">
-            <i class="fa-solid text-blue-600 fa-square-arrow-up-right fa-2xl"></i>
-            @if (!isSmallDevice()) {Jira}
+            <i class="fa-solid text-blue-600 fa-square-arrow-up-right text-3xl"></i>
+            @if (!isSmallDevice()) {
+                <p class="text-sm font-semibold">Jira</p>
+            }
         </div>
         @if (isSmallDevice()) {
         <div class="flex cursor-pointer hover:bg-gray-200 h-2rem w-2rem justify-content-center align-items-center p-1 border-1 border-gray-400 border-round-sm" pTooltip="Create column" (click)="toggleMoreMenu()" tooltipPosition="left">
