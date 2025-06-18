@@ -13,6 +13,7 @@ import { ColumnComponent } from '../components/column.component';
 import { ProjectDto } from '../dtos/projectDto';
 import { ProjectService } from '../services/project.service';
 import { ProjectHeaderComponent } from '../project-header/project-header.component';
+import { NavigationService } from '../services/navigation.service';
 
 @Component({
   selector: 'app-main-page',
@@ -35,6 +36,7 @@ export class MainPageComponent implements OnInit {
   readonly itemPriority = ItemPriorityEnum;
   value: string;
   newColumnTitle: string;
+  sideNavVisible: WritableSignal<boolean> = signal(null);
   fullscreenEnabled: WritableSignal<boolean> = signal(false);
   creatingColumn: WritableSignal<boolean> = signal(false);
   user: WritableSignal<UserDto> = signal(null);
@@ -44,9 +46,14 @@ export class MainPageComponent implements OnInit {
   constructor ( 
     private userService: UserService,
     private projectService: ProjectService,
+    private navigationService: NavigationService,
    ) {
     this.userService.user$.subscribe((data: UserDto) => {
       this.user.set(data);
+    });
+
+    this.navigationService.sideNavVisible$.subscribe((data: boolean) => {
+      this.sideNavVisible.set(data);
     });
   }
 

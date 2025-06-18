@@ -1,4 +1,4 @@
-<div class="flex flex-column h-full w-full">
+<div class="flex flex-column h-full" [style.width]="sideNavVisible() ? 'calc(100vw - 240px)' : '100vw'">
     <app-project-header [project]="project()" />
     <div class="flex flex-column w-full h-full p-3">
         <div class="flex justify-content-between">

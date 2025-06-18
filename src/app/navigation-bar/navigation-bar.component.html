@@ -2,7 +2,7 @@
     <div class="flex gap-1 align-items-center" style="width: 200px;">
         <div style="width: 32px; height: 32px" (click)="toggleSideNav()" pTooltip="Collapse sidebar" class="flex cursor-pointer align-items-center justify-content-center border-round-sm hover:bg-gray-200">
             <div style="width: 16px; height: 16px; border: 2px solid gray; padding: 0px 2px;" class="flex align-items-center border-round-xs">
-                <i class="relative fa-solid text-gray-500 text-xs {{sideNavVisible ? 'fa-chevron-left border-left-2' : 'fa-chevron-right border-right-2'}}" [ngStyle]="{'left' : sideNavVisible ? '' : '-2px'}"></i>
+                <i class="relative fa-solid text-gray-500 text-xs {{sideNavVisible() ? 'fa-chevron-left border-left-2' : 'fa-chevron-right border-right-2'}}" [ngStyle]="{'left' : sideNavVisible() ? '' : '-2px'}"></i>
             </div>
         </div>
         <div class="flex align-items-center justify-content-center gap-2 cursor-pointer px-1 hover:bg-gray-200 border-round-md" style="height: 32px;">

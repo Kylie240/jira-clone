@@ -29,11 +29,11 @@
         <div style="border-bottom: 1px solid lightgray">
             <div class="flex align-items-center mt-2 gap-4 text-gray-600 px-4">
                 @for(item of projectMenu(); track $index) {
-                    <div class="flex align-items-center cursor-pointer">
+                    <div class="flex align-items-center cursor-pointer" style="min-width: fit-content">
                         <div style="width: 20px;">
                             <i class="{{item.icon}} fa-md"></i>
                         </div>
-                        <p class="text-md m-0" style="width: fit-content">{{item.name}}</p>
+                        <p class="text-md m-0">{{item.name}}</p>
                     </div>
                 }
                 <div class="hover:bg-gray-200 cursor-pointer px-2 py-1 border-round-sm">

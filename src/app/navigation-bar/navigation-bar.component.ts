@@ -35,7 +35,7 @@ import { NgClass, NgStyle } from '@angular/common';
 })
 export class NavigationBarComponent {
   value: string = '';
-  sideNavVisible: boolean;
+  sideNavVisible: WritableSignal<boolean> = signal(null)
   user: WritableSignal<UserDto> = signal(null)
   moreMenuVisible: WritableSignal<boolean> = signal(false);
   isTablet: WritableSignal<boolean> = signal(false);
@@ -53,7 +53,9 @@ export class NavigationBarComponent {
      });
 
     this.navigationService.sideNavVisible$.subscribe((data: boolean) => {
-      this.sideNavVisible = data;
+      this.sideNavVisible.set(data);
+      console.log(data);
+      
     });
 
     this.breakpointObserver.observe([this.tabletBreakpoint, this.smallDeviceBreakpoint]).subscribe(data => {
@@ -67,7 +69,7 @@ export class NavigationBarComponent {
   }
 
   toggleSideNav() {
-    this.navigationService.toggleSideNavbar(!this.sideNavVisible);
+    this.navigationService.toggleSideNavbar(!this.sideNavVisible());
   }
 
   toggleMoreMenu() {
